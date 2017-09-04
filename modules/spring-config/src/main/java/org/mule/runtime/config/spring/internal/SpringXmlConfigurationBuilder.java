@@ -60,13 +60,14 @@ public class SpringXmlConfigurationBuilder extends AbstractResourceConfiguration
     this.enableLazyInit = enableLazyInit;
   }
 
-  public SpringXmlConfigurationBuilder(String configResources, Map<String, String> artifactProperties, ArtifactType artifactType)
+  public SpringXmlConfigurationBuilder(String configResources, Map<String, String> artifactProperties, ArtifactType artifactType,
+                                       boolean enableLazyInit)
       throws ConfigurationException {
-    this(new String[] {configResources}, artifactProperties, artifactType, false);
+    this(new String[] {configResources}, artifactProperties, artifactType, enableLazyInit);
   }
 
   public SpringXmlConfigurationBuilder(String configResource) throws ConfigurationException {
-    this(configResource, emptyMap(), APP);
+    this(configResource, emptyMap(), APP, false);
   }
 
   public SpringXmlConfigurationBuilder(String[] configFiles, boolean enableLazyInit) throws ConfigurationException {

@@ -52,12 +52,24 @@ public final class SpringXmlConfigurationBuilderFactory {
   public static ConfigurationBuilder createConfigurationBuilder(String configResource, Map<String, String> artifactProperties,
                                                                 ArtifactType artifactType)
       throws ConfigurationException {
-    return new SpringXmlConfigurationBuilder(configResource, artifactProperties, artifactType);
+    return new SpringXmlConfigurationBuilder(configResource, artifactProperties, artifactType, false);
   }
 
   public static ConfigurationBuilder createConfigurationBuilder(String[] configResources, Map<String, String> artifactProperties,
                                                                 ArtifactType artifactType)
       throws ConfigurationException {
     return new SpringXmlConfigurationBuilder(configResources, artifactProperties, artifactType, false);
+  }
+
+  public static ConfigurationBuilder createConfigurationBuilder(String configResource, Map<String, String> artifactProperties,
+                                                                ArtifactType artifactType, boolean enableLazyInit)
+      throws ConfigurationException {
+    return new SpringXmlConfigurationBuilder(configResource, artifactProperties, artifactType, enableLazyInit);
+  }
+
+  public static ConfigurationBuilder createConfigurationBuilder(String[] configResources, Map<String, String> artifactProperties,
+                                                                ArtifactType artifactType, boolean enableLazyInit)
+      throws ConfigurationException {
+    return new SpringXmlConfigurationBuilder(configResources, artifactProperties, artifactType, enableLazyInit);
   }
 }

@@ -26,15 +26,15 @@ import org.mule.runtime.api.meta.model.ExtensionModel;
 import org.mule.runtime.api.meta.model.config.ConfigurationModel;
 import org.mule.runtime.core.api.DefaultMuleException;
 import org.mule.runtime.core.api.MuleContext;
-import org.mule.runtime.core.internal.lifecycle.DefaultLifecycleManager;
 import org.mule.runtime.core.api.lifecycle.SimpleLifecycleManager;
+import org.mule.runtime.core.internal.lifecycle.DefaultLifecycleManager;
 import org.mule.runtime.extension.api.runtime.config.ConfigurationInstance;
 import org.mule.runtime.extension.api.runtime.config.ConfigurationProvider;
-
 import org.slf4j.Logger;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Base class for implementations of {@link ConfigurationProvider} which keep track of the {@link ConfigurationInstance} they
@@ -57,6 +57,7 @@ public abstract class LifecycleAwareConfigurationProvider extends AbstractAnnota
   private final ClassLoader extensionClassLoader;
   protected final SimpleLifecycleManager lifecycleManager;
   protected final MuleContext muleContext;
+  private final AtomicBoolean initialized = new AtomicBoolean(false);
 
   public LifecycleAwareConfigurationProvider(String name, ExtensionModel extensionModel, ConfigurationModel configurationModel,
                                              MuleContext muleContext) {
@@ -82,6 +83,7 @@ public abstract class LifecycleAwareConfigurationProvider extends AbstractAnnota
           initialiseIfNeeded(configurationInstance, true, muleContext);
         }
         doInitialise();
+        initialized.set(true);
       });
       return null;
     }, InitialisationException.class, e -> {
@@ -131,6 +133,24 @@ public abstract class LifecycleAwareConfigurationProvider extends AbstractAnnota
       throw new DefaultMuleException(e);
     });
   }
+
+  //  @Override
+  //  public void stop() throws MuleException {
+  //    synchronized (initialized) {
+  //      if (initialized.get()) {
+  //        withContextClassLoader(extensionClassLoader, () -> {
+  //          lifecycleManager.fireStopPhase((phaseName, object) -> {
+  //            for (ConfigurationInstance configurationInstance : configurationInstances) {
+  //              stopIfNeeded(configurationInstance);
+  //            }
+  //          });
+  //          return null;
+  //        }, MuleException.class, e -> {
+  //          throw new DefaultMuleException(e);
+  //        });
+  //      }
+  //    }
+  //  }
 
   /**
    * When needed, fires the {@link Disposable#dispose()} phase on the currently provided configurations
