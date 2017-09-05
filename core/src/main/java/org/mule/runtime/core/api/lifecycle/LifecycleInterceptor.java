@@ -6,7 +6,9 @@
  */
 package org.mule.runtime.core.api.lifecycle;
 
+import java.util.Map;
 import java.util.Optional;
+import java.util.WeakHashMap;
 
 /**
  * Allows intercepting the application of {@link LifecyclePhase lifecycle phases} over each target object.
@@ -14,6 +16,8 @@ import java.util.Optional;
  * @since 3.8
  */
 public interface LifecycleInterceptor {
+
+  Map<Object, Object> trackingPhaseFailureObjects = new WeakHashMap<>();
 
   /**
    * Invoked before the given {@code phase} is applied over the {@code object}.

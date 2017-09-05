@@ -11,10 +11,10 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_STORE_MANAGER;
 import org.mule.runtime.api.lifecycle.Disposable;
+import org.mule.runtime.api.lifecycle.Initialisable;
 import org.mule.runtime.api.store.ObjectStore;
 import org.mule.runtime.api.store.ObjectStoreSettings;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -30,14 +30,16 @@ public class MuleObjectStoreDisposalTestCase extends AbstractMuleContextTestCase
 
   private MuleObjectStoreManager osm;
 
-  @Mock(extraInterfaces = Disposable.class)
+  @Mock(extraInterfaces = {Disposable.class, Initialisable.class})
   private ObjectStore disposableStore;
 
   @Override
   protected void doSetUp() throws Exception {
     osm = muleContext.getRegistry().lookupObject(OBJECT_STORE_MANAGER);
     muleContext.getRegistry().registerObject(DISPOSABLE_TRANSIENT_USER_STORE_KEY, disposableStore);
+//    muleContext.getLifecycleManager().applyPhase(disposableStore, NotInLifecyclePhase.PHASE_NAME, Initialisable.PHASE_NAME);
     osm.setBaseTransientStoreKey(DISPOSABLE_TRANSIENT_USER_STORE_KEY);
+    muleContext.initialise();
   }
 
   @Test

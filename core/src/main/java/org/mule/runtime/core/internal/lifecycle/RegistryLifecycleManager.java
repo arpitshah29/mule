@@ -99,6 +99,7 @@ public class RegistryLifecycleManager extends AbstractLifecycleManager<Registry>
       if (Startable.PHASE_NAME.equals(phaseName) || Stoppable.PHASE_NAME.equals(phaseName)) {
         ((HasLifecycleInterceptor) callback).setLifecycleInterceptor(startstopLifecycleInterceptor);
       }
+      ((HasLifecycleInterceptor) callback).setLifecycleInterceptor(new SmartLifecycleInterceptor());
     }
 
     phaseNames.add(phaseName);
