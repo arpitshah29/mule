@@ -220,18 +220,7 @@
         <muleApiVersion>1.0.0-SNAPSHOT</muleApiVersion>
         <muleMetadataModelVersion>1.0.0-SNAPSHOT</muleMetadataModelVersion>
         <metadataModelApiVersion>${muleMetadataModelVersion}</metadataModelApiVersion>
-
-        <muleSpringModuleTestVersion>1.0.0-SNAPSHOT</muleSpringModuleTestVersion>
-        <muleHttpConnectorTestVersion>1.0.0-SNAPSHOT</muleHttpConnectorTestVersion>
-        <muleSocketsConnectorTestVersion>1.0.0-SNAPSHOT</muleSocketsConnectorTestVersion>
-        <muleFileConnectorTestVersion>1.0.0-SNAPSHOT</muleFileConnectorTestVersion>
-        <muleJmsConnectorTestVersion>1.0.0-SNAPSHOT</muleJmsConnectorTestVersion>
-
-        <muleFileCommonsTestVersion>1.0.0-SNAPSHOT</muleFileCommonsTestVersion>
-
-        <muleHttpServiceTestVersion>1.0.0-SNAPSHOT</muleHttpServiceTestVersion>
-        <muleSchedulerServiceTestVersion>1.0.0-SNAPSHOT</muleSchedulerServiceTestVersion>
-
+        
         <!-- Test Extensions -->
         <muleMetadataExtensionTestVersion>4.0.0-SNAPSHOT</muleMetadataExtensionTestVersion>
         <muleVeganExtensionTestVersion>4.0.0-SNAPSHOT</muleVeganExtensionTestVersion>
@@ -239,6 +228,9 @@
         <muleMarvelExtensionTestVersion>4.0.0-SNAPSHOT</muleMarvelExtensionTestVersion>
         <mulePetstoreExtensionTestVersion>4.0.0-SNAPSHOT</mulePetstoreExtensionTestVersion>
         <muleSubtypesExtensionTestVersion>4.0.0-SNAPSHOT</muleSubtypesExtensionTestVersion>
+
+        <!-- TODO extract after fixing MULE-13644 -->
+        <muleHttpServiceTestVersion>1.0.0-SNAPSHOT</muleHttpServiceTestVersion>
 
         <!--Maven plugins versions-->
         <dependency.plugin.version>2.10</dependency.plugin.version>
