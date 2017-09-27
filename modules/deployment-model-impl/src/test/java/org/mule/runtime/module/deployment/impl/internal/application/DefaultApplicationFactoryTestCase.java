@@ -78,7 +78,7 @@ public class DefaultApplicationFactoryTestCase extends AbstractMuleTestCase {
     final ApplicationDescriptor descriptor = new ApplicationDescriptor(APP_NAME);
     descriptor.setDomain(DOMAIN_NAME);
     final File[] resourceFiles = new File[] {new File("mule-config.xml")};
-    when(applicationDescriptorFactory.create(any())).thenReturn(descriptor);
+    when(applicationDescriptorFactory.create(any(), any())).thenReturn(descriptor);
 
     final ArtifactPluginDescriptor coreArtifactPluginDescriptor = mock(ArtifactPluginDescriptor.class);
     List<ArtifactPluginDescriptor> containerArtifactPluginDescriptors = new LinkedList<>();
@@ -151,7 +151,7 @@ public class DefaultApplicationFactoryTestCase extends AbstractMuleTestCase {
   public void applicationDesployFailDueToDomainNotDeployed() throws Exception {
     final ApplicationDescriptor descriptor = new ApplicationDescriptor(APP_NAME);
     descriptor.setDomain(DOMAIN_NAME);
-    when(applicationDescriptorFactory.create(any())).thenReturn(descriptor);
+    when(applicationDescriptorFactory.create(any(), any())).thenReturn(descriptor);
 
     expectedException.expect(DeploymentException.class);
     applicationFactory.createArtifact(new File(APP_NAME));
