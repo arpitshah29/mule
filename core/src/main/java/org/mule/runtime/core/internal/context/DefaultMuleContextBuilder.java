@@ -9,6 +9,11 @@ package org.mule.runtime.core.internal.context;
 import static org.mule.runtime.core.api.context.notification.ServerNotificationManager.createDefaultNotificationManager;
 import static org.mule.runtime.core.internal.exception.ErrorTypeLocatorFactory.createDefaultErrorTypeLocator;
 import static org.mule.runtime.core.internal.exception.ErrorTypeRepositoryFactory.createDefaultErrorTypeRepository;
+import static java.util.Optional.empty;
+
+import java.util.Optional;
+import java.util.Properties;
+
 import org.mule.runtime.api.exception.MuleRuntimeException;
 import org.mule.runtime.api.i18n.I18nMessage;
 import org.mule.runtime.api.i18n.I18nMessageFactory;
@@ -59,6 +64,8 @@ public class DefaultMuleContextBuilder implements MuleContextBuilder {
 
   private ErrorTypeRepository errorTypeRepository;
 
+  private Optional<Properties> deploymentProperties = empty();
+
   /**
    * Creates a new builder
    *
@@ -90,7 +97,7 @@ public class DefaultMuleContextBuilder implements MuleContextBuilder {
     muleContext.setExecutionClassLoader(getExecutionClassLoader());
     muleContext
         .setBootstrapServiceDiscoverer(injectMuleContextIfRequired(createBootstrapDiscoverer(), muleContext));
-
+    muleContext.setDeploymentProperties(getDeploymentProperties());
     getObjectSerializer(muleContext);
 
     if (errorTypeRepository == null) {
@@ -103,6 +110,14 @@ public class DefaultMuleContextBuilder implements MuleContextBuilder {
     muleContext.setProcessorInterceptorManager(new DefaultProcessorInterceptorManager());
 
     return muleContext;
+  }
+
+  private Properties getDeploymentProperties() {
+    if (!deploymentProperties.isPresent()) {
+      return new Properties();
+    }
+
+    return deploymentProperties.get();
   }
 
   private void getObjectSerializer(DefaultMuleContext muleContext) {
@@ -227,5 +242,9 @@ public class DefaultMuleContextBuilder implements MuleContextBuilder {
   public String toString() {
     return ClassUtils.getClassName(getClass()) + "{muleConfiguration=" + config + ", lifecycleManager=" + lifecycleManager
         + ", notificationManager=" + notificationManager + "}";
+  }
+
+  public void setDeploymentProperties(Optional<Properties> deploymentProperties) {
+    this.deploymentProperties = deploymentProperties;
   }
 }

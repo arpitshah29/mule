@@ -9,10 +9,12 @@ package org.mule.runtime.deployment.model.api.plugin;
 
 import static java.util.Optional.empty;
 import static java.util.Optional.ofNullable;
-import org.mule.runtime.api.meta.model.ExtensionModel;
-import org.mule.runtime.deployment.model.api.DeployableArtifactDescriptor;
 
 import java.util.Optional;
+import java.util.Properties;
+
+import org.mule.runtime.api.meta.model.ExtensionModel;
+import org.mule.runtime.deployment.model.api.DeployableArtifactDescriptor;
 
 public class ArtifactPluginDescriptor extends DeployableArtifactDescriptor {
 
@@ -38,6 +40,16 @@ public class ArtifactPluginDescriptor extends DeployableArtifactDescriptor {
    */
   public ArtifactPluginDescriptor(String name) {
     super(name);
+  }
+
+  /**
+   * Creates a new artifact plugin descriptor
+   *
+   * @param name artifact plugin name. Non empty.
+   * @param deploymentProperties deployment properties provided for the plugin
+   */
+  public ArtifactPluginDescriptor(String name, Optional<Properties> deploymentProperties) {
+    super(name, deploymentProperties);
   }
 
   /**

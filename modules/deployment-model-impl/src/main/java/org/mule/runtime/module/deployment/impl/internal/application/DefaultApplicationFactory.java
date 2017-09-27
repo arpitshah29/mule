@@ -44,6 +44,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Properties;
 import java.util.Set;
 
 /**
@@ -93,14 +94,7 @@ public class DefaultApplicationFactory implements ArtifactFactory<Application> {
 
   @Override
   public Application createArtifact(File appDir) throws IOException {
-    String appName = appDir.getName();
-    if (appName.contains(" ")) {
-      throw new IllegalArgumentException("Mule application name may not contain spaces: " + appName);
-    }
-
-    final ApplicationDescriptor descriptor = applicationDescriptorFactory.create(appDir);
-
-    return createArtifact(descriptor);
+    return createArtifact(appDir, empty());
   }
 
   @Override
@@ -221,6 +215,18 @@ public class DefaultApplicationFactory implements ArtifactFactory<Application> {
                                                                        })
                                                                        .findFirst().get()))
         .collect(toList());
+  }
+
+  @Override
+  public Application createArtifact(File appDir, Optional<Properties> appProperties) throws IOException {
+    String appName = appDir.getName();
+    if (appName.contains(" ")) {
+      throw new IllegalArgumentException("Mule application name may not contain spaces: " + appName);
+    }
+
+    final ApplicationDescriptor descriptor = applicationDescriptorFactory.create(appDir, appProperties);
+
+    return createArtifact(descriptor);
   }
 
 }

@@ -6,6 +6,9 @@
  */
 package org.mule.runtime.core.api.context;
 
+import java.util.Optional;
+import java.util.Properties;
+
 import org.mule.runtime.api.serialization.ObjectSerializer;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.config.MuleConfiguration;
@@ -58,4 +61,6 @@ public interface MuleContextBuilder {
   static MuleContextBuilder builder(ArtifactType artifactType) {
     return new DefaultMuleContextBuilder(artifactType);
   }
+
+  void setDeploymentProperties(Optional<Properties> properties);
 }
